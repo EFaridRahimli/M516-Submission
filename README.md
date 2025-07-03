@@ -45,6 +45,8 @@ print(magic_gamma_telescope.variables)
 ```bash
 git clone https://github.com/EFaridRahimli/M516-Submission
 ```
-2 - The project was done with conda
-3 - Install dependacies with requirements.txt (Recommende to instal tensorflow with conda -c conda-forge for better handling)
+### 2 - The project was done with conda
+### 3 - Install dependacies with requirements.txt (Recommende to instal tensorflow with conda -c conda-forge for better handling)
 ---
+### Results
+XGBoost yielded best reults in for this problem with accuracy of 85% and f1-score of 90% performing better than Keras deep learning MLP model.
