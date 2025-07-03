@@ -1,4 +1,8 @@
- Classification of Gamma Rays for Cherenkov Telescope Array using ML/AI
+# Classification of Gamma Rays for Cherenkov Telescope Array using ML/AI
+## Farid Rahimli
+## GH1029730
+## M516
+## Business Project in Big Data & AI
 # **Project Overview**
 ---
 #### *Notebook develops the machine-learning/AI model to classify high energy particles read by the MAGIC Gamma Telescope.*
