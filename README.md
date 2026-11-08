@@ -1,56 +1,49 @@
-# Classification of Gamma Rays for Cherenkov Telescope Array using ML/AI
-## Farid Rahimli
-## GH1029730
-## M516
-## Business Project in Big Data & AI
-# **Project Overview**
----
-#### *Notebook develops the machine-learning/AI model to classify high energy particles read by the MAGIC Gamma Telescope.*
----
-#### **Business Problem**
-#### *Main idea of this project is to procure highly efficient and accurate model that is able to distinguish between gamma-ray signals which are very valuable for scientific purposes named as a class (`g`) and background noise or hadronic showers that do not carry any useful information named (`h`) Enabling this classification will directly affect scientific value of the telescope as well as improve the ROI of the whole facility due to improved timeliness*
----
-#### **Method**
-- #### *Fetch and PreProcess the telescope data from UCI repository.*
-- #### *Conduct EDA \\ Understand correlation and distribution of features.*
-- #### *Construct tune and train baseline traditional model (XGBoost)*
-- #### *Construct tune and train deep learning model (keral MLP)*
-- #### *Compare evaluate and Conclude*
----
-#### **Data Source**
-The dataset used is the **MAGIC Gamma Telescope Data Set** from the UCI Machine Learning Repository.
+# Gamma-Ray vs Hadron Classification (MAGIC Telescope)
 
-**Source:** [https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope](https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope)](https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope)
+Classifies high-energy particle events from the **MAGIC Gamma Telescope** as valuable **gamma-ray signals** (`g`) or **hadronic background noise** (`h`), the kind of filtering the Cherenkov Telescope Array needs to raise its scientific return.
 
-# **P>S. Data can be fetched using ucimlrepo**
-```bash
-pip install ucimlrepo
-```
-# To import the DATASET
+*MSc Business Project in Big Data & AI (M516), Farid Rahimli*
+
+## Results
+| Model | Accuracy | AUC | F1 (gamma) | Recall (gamma) |
+|---|---|---|---|---|
+| **XGBoost (tuned)** | **86.6%** | **0.838** | **0.90** | 0.93 |
+| Keras MLP | 83.2% | 0.779 | 0.88 | 0.96 |
+
+XGBoost, tuned with `RandomizedSearchCV`, beat the deep-learning model on this tabular problem.
+
+## Approach
+1. Fetch the data from the UCI repository and preprocess it.
+2. EDA: feature correlations and distributions; class imbalance (hadrons are ~30% fewer than gammas).
+3. Train and tune an XGBoost baseline.
+4. Train a Keras MLP.
+5. Compare, evaluate and conclude.
+
+## Data
+[MAGIC Gamma Telescope dataset](https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope), UCI Machine Learning Repository. It is fetched in code:
 ```python
-from ucimlrepo import fetch_ucirepo 
-  
-# fetch dataset 
-magic_gamma_telescope = fetch_ucirepo(id=159) 
-  
-# data (as pandas dataframes) 
-X = magic_gamma_telescope.data.features 
-y = magic_gamma_telescope.data.targets 
-  
-# metadata 
-print(magic_gamma_telescope.metadata) 
-  
-# variable information 
-print(magic_gamma_telescope.variables)
+from ucimlrepo import fetch_ucirepo
+
+magic = fetch_ucirepo(id=159)
+X, y = magic.data.features, magic.data.targets
 ```
----
-### **How to use**
-1 - To clone this repository:
+
+## Run it
 ```bash
 git clone https://github.com/EFaridRahimli/M516-Submission
+cd M516-Submission
+conda create -n gamma python=3.10 && conda activate gamma
+conda install -c conda-forge tensorflow   # recommended over pip for TensorFlow
+pip install -r requirements.txt
+jupyter notebook gamma.ipynb
 ```
-### 2 - The project was done with conda
-### 3 - Install dependacies with requirements.txt (Recommende to instal tensorflow with conda -c conda-forge for better handling)
----
-### Results
-XGBoost yielded best reults in for this problem with accuracy of 85% and f1-score of 90% performing better than Keras deep learning MLP model.
+
+## Repository contents
+| Path | Description |
+|------|-------------|
+| `gamma.ipynb` | Full notebook: EDA, models, evaluation |
+| `figs/` | Figures used in the report |
+| `requirements.txt` | Python dependencies |
+
+## Tech stack
+Python · XGBoost · TensorFlow/Keras · scikit-learn · pandas · ucimlrepo
